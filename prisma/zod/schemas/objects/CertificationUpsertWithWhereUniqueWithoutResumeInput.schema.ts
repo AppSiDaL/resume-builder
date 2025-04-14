@@ -1,0 +1,30 @@
+import { z } from 'zod';
+import { CertificationWhereUniqueInputObjectSchema } from './CertificationWhereUniqueInput.schema';
+import { CertificationUpdateWithoutResumeInputObjectSchema } from './CertificationUpdateWithoutResumeInput.schema';
+import { CertificationUncheckedUpdateWithoutResumeInputObjectSchema } from './CertificationUncheckedUpdateWithoutResumeInput.schema';
+import { CertificationCreateWithoutResumeInputObjectSchema } from './CertificationCreateWithoutResumeInput.schema';
+import { CertificationUncheckedCreateWithoutResumeInputObjectSchema } from './CertificationUncheckedCreateWithoutResumeInput.schema';
+
+import type { Prisma } from '@prisma/client';
+
+const Schema: z.ZodType<Prisma.CertificationUpsertWithWhereUniqueWithoutResumeInput> =
+  z
+    .object({
+      where: z.lazy(() => CertificationWhereUniqueInputObjectSchema),
+      update: z.union([
+        z.lazy(() => CertificationUpdateWithoutResumeInputObjectSchema),
+        z.lazy(
+          () => CertificationUncheckedUpdateWithoutResumeInputObjectSchema,
+        ),
+      ]),
+      create: z.union([
+        z.lazy(() => CertificationCreateWithoutResumeInputObjectSchema),
+        z.lazy(
+          () => CertificationUncheckedCreateWithoutResumeInputObjectSchema,
+        ),
+      ]),
+    })
+    .strict();
+
+export const CertificationUpsertWithWhereUniqueWithoutResumeInputObjectSchema =
+  Schema;

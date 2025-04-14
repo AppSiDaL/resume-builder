@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  username     String   @unique
+  password     String
+  profileImage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  resumes      Resume[]
+}
+
+model Resume {
+  id             String          @id @default(cuid())
+  title          String          @default("Untitled Resume")
+  templateId     String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  personalInfo   PersonalInfo?
+  educations     Education[]
+  experiences    Experience[]
+  skills         Skill[]
+  certifications Certification[]
+  languages      Language[]
+  projects       Project[]
+  references     Reference[]
+}
+
+model PersonalInfo {
+  id       String  @id @default(cuid())
+  fullName String
+  title    String?
+  email    String?
+  phone    String?
+  address  String?
+  website  String?
+  summary  String?
+  resumeId String  @unique
+  resume   Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+}
+
+model Education {
+  id           String  @id @default(cuid())
+  institution  String
+  degree       String?
+  fieldOfStudy String?
+  startDate    String?
+  endDate      String?
+  location     String?
+  gpa          String?
+  description  String?
+  resumeId     String
+  resume       Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  order        Int     @default(0)
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  company     String
+  position    String
+  startDate   String?
+  endDate     String?
+  location    String?
+  description String[]
+  resumeId    String
+  resume      Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  order       Int      @default(0)
+}
+
+model Skill {
+  id       String @id @default(cuid())
+  name     String
+  level    Int?   @default(0) // 0-100 for skill level bars
+  resumeId String
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+}
+
+model Certification {
+  id       String  @id @default(cuid())
+  name     String
+  issuer   String?
+  date     String?
+  url      String?
+  resumeId String
+  resume   Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  order    Int     @default(0)
+}
+
+model Language {
+  id       String  @id @default(cuid())
+  name     String
+  level    String? // e.g., "Fluent", "Intermediate", "Basic"
+  resumeId String
+  resume   Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  url         String?
+  startDate   String?
+  endDate     String?
+  resumeId    String
+  resume      Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  order       Int     @default(0)
+}
+
+model Reference {
+  id       String  @id @default(cuid())
+  name     String
+  company  String?
+  position String?
+  email    String?
+  phone    String?
+  resumeId String
+  resume   Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "./zod"
+}
