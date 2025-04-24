@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export function CTASection() {
   return (
-    <section className="py-20 bg-white dark:bg-black/20">
+    <section className="py-20 ">
       <div className="container mx-auto px-4 text-center">
         <ScrollReveal>
           <div className="max-w-4xl mx-auto p-12 rounded-lg bg-gray-50 dark:bg-black/40 backdrop-blur-sm border border-gray-200 dark:border-gray-800 shadow-sm">

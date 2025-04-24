@@ -19,7 +19,7 @@ export function TemplatesSection() {
   ];
 
   return (
-    <section className="py-20 bg-white dark:bg-black/20" id="templates">
+    <section className="py-20" id="templates">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <ScrollReveal>

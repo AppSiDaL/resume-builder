@@ -1,15 +1,50 @@
-let userConfig = undefined
-try {
-  // try to import ESM first
-  userConfig = await import('./v0-user-next.config.mjs')
-} catch (e) {
-  try {
-    // fallback to CJS import
-    userConfig = await import("./v0-user-next.config");
-  } catch (innerError) {
-    // ignore error
+/** @type {import('next').NextConfig} */
+
+  const userConfig =  {
+    reactStrictMode: true,
+    images: {
+      domains: ["placeholder.svg"],
+    },
+    i18n: {
+      locales: ["es"],
+      defaultLocale: "es",
+    },
+    async headers() {
+      return [
+        {
+          source: "/(.*)",
+          headers: [
+            {
+              key: "X-Content-Type-Options",
+              value: "nosniff",
+            },
+            {
+              key: "X-Frame-Options",
+              value: "DENY",
+            },
+            {
+              key: "X-XSS-Protection",
+              value: "1; mode=block",
+            },
+          ],
+        },
+      ]
+    },
+    async redirects() {
+      return [
+        {
+          source: "/index",
+          destination: "/",
+          permanent: true,
+        },
+        {
+          source: "/home",
+          destination: "/",
+          permanent: true,
+        },
+      ]
+    },
   }
-}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

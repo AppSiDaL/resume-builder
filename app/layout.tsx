@@ -7,7 +7,6 @@ export const metadata = {
   title: "CV Builder - Crea currículums profesionales en minutos",
   description:
     "Diseña un currículum profesional con nuestras plantillas premium. Destaca tu experiencia y consigue el trabajo de tus sueños.",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({
